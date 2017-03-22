@@ -26,20 +26,22 @@ module Omega
 
   def convert_to_pennies(dollar_string)
     dollars = dollar_string.sub(/\$/,'').to_f
-    (dollars * 100).floor
+    (dollars * 100).round
   end
 
-  def update_product record
-    if product.price == convert_to_pennies(record['price'])
+  def update_product product, record
+    price_in_pennies = convert_to_pennies(record['price'])
+    if product.price == price_in_pennies
       # do nothing, done
     else
       # log change and update product
-      PastPriceRecord.log_change product: product, new_price: convert_to_pennies(record['price'])
+      PastPriceRecord.log_change product: product,
+                                 new_price: price_in_pennies
       product.update price: price_in_pennies
     end
   end
 
-  def update record
+  def update product, record
     if product.putduct_name == record['name']
       update_product record
     else
@@ -61,7 +63,7 @@ module Omega
 
   def process_record record
     if product = Product.find_by(external_product_id: record['id'])
-      update record
+      update product, record
     else
       # no product found, create unless discontinued
       if record['discontinued'] == false
