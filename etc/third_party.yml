@@ -1,0 +1,3 @@
+omega:
+  url: "https://omegapricinginc.com/pricing/records.json"
+  api_key: "abc123key"

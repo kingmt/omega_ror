@@ -10,11 +10,10 @@ module Omega
   end
 
   def fetch start_date, end_date
-    omega_url = "https://omegapricinginc.com/pricing/records.json"
-    params = {api_key: "abc123key",
+    params = {api_key: Figs.third_party.omega.api_key,
               start_date: start_date,
               end_date: end_date}
-    response = HTTParty.get omega_url, params
+    response = HTTParty.get Figs.third_party.omega.url, params
     if response.status == 200
       JSON.parse response.body
     else
