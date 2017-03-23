@@ -26,6 +26,7 @@ group :development, :test do
   gem 'guard-rspec'
 end
 
+gem 'httparty'
 gem 'figgy'
 
 group :development do
