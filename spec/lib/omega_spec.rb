@@ -51,7 +51,7 @@ RSpec.describe Omega do
                                     price: 1999
                     }
 
-    context 'name matches' do
+    it 'matches name' do
       expect(Omega).to receive(:update_product)
       record = {'id' => 1234,
                 'name' => 'nice chair',
@@ -60,7 +60,7 @@ RSpec.describe Omega do
       Omega.update product, record
     end
 
-    context 'name mismatch' do
+    it 'name mismatch' do
       record = {'id' => 1234,
                 'name' => 'ratty old chair',
                 'price' => '$12.34'
@@ -92,19 +92,19 @@ RSpec.describe Omega do
   end
 
   describe 'process_record' do
-    context 'product found' do
+    it 'found a product' do
       # verify that the next method in the chain is called
-      Product.create external_product_id: 213,
+      Product.create external_product_id: 123,
                      product_name: 'nice chair',
                      price: 1999
-      json = {'external_product_id' => 123}
+      json = {'id' => 123}
       expect(Omega).to receive(:update)
       Omega.process_record json
     end
 
     context 'product not found' do
       it 'creates product if not discontinued' do
-        record = {'id' => 213,
+        record = {'id' => 113,
                   'name' => 'foo',
                   'price' => '$14.95',
                   'discontinued' => false}
@@ -114,7 +114,7 @@ RSpec.describe Omega do
       end
 
       it 'does nothing when discontinued' do
-        record = {'id' => 213,
+        record = {'id' => 211,
                   'name' => 'foo',
                   'price' => '$14.95',
                   'discontinued' => true}

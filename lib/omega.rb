@@ -41,8 +41,8 @@ module Omega
   end
 
   def update product, record
-    if product.putduct_name == record['name']
-      update_product record
+    if product.product_name == record['name']
+      update_product product, record
     else
       # error name mismatch
       Rails.logger.error "Product has a name mismatch! Internal product id: #{product.id}, name given #{record['name']}"
@@ -72,12 +72,12 @@ module Omega
   end
 
   def update_all json_data
-    if json['productRecords']
-      json['productRecords'].each do |record|
+    if json_data['productRecords']
+      json_data['productRecords'].each do |record|
         process_record record
       end
     else
-      Rails.logger.error "Unrecognized data from Omege Pricing Inc"
+      Rails.logger.error "Unrecognized data from Omega Pricing Inc"
     end
   end
 end
